@@ -62,4 +62,4 @@ Prikaz više uzastopnih međuvremena. Svako je zabilježeno dok je tajmer nastav
 
 ## Autor
 
-Emin Tunguzović, ETŠ Tuzla
+Emin Tulumović, ETŠ Tuzla
