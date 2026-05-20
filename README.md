@@ -1,26 +1,65 @@
-# Štoperica
+# Štoperica — Flowcode & PIC mikrokontroler
 
-Projekat urađen u Flowcode-u. Simulira digitalnu štopericu koja mjeri proteklo vrijeme i prikazuje ga na LCD ekranu pomoću PIC mikrokontrolera.
+Projekat urađen u Flowcode-u kao simulacija digitalne štoperice na PIC16F88 mikrokontroleru. Rađeno u sklopu laboratorijske vježbe iz Praktične nastave.
 
-## Kako radi
+## Šta radi
 
-Osnova projekta je petlja koja se stalno izvršava i broji stotinke. Kad se nakupi 100 stotinki, sekunde se povećaju za jedan i stotinke se resetuju. Na isti način, kad sekunde dođu do 60, povećaju se minute. Rezultat se u svakom koraku ispisuje na LCD u formatu MM:SS:ss.
-
-Program čita stanje tastera na svakom prolasku kroz petlju. U zavisnosti od toga koji je taster pritisnut, program ili nastavlja mjerenje, staje, bilježi međuvrijeme ili resetuje sve na početak:
+Štoperica mjeri proteklo vrijeme i prikazuje ga na LCD ekranu u formatu minute:sekunde:stotinke. Upravljanje je putem četiri tastera:
 
 | Taster | Funkcija |
 |--------|----------|
-| Start | Počinje mjerenje vremena |
-| Stop | Pauzira mjerenje, ostaje na trenutnoj vrijednosti |
-| Lap | Sprema trenutno međuvrijeme u posebne varijable |
-| Reset | Postavlja minute, sekunde i stotinke na nulu |
+| Start | Počinje mjerenje |
+| Stop | Pauzira mjerenje na trenutnoj vrijednosti |
+| Lap | Sprema međuvrijeme, tajmer nastavlja u pozadini |
+| Reset | Resetuje sve na nulu |
+
+## Kako je implementovano
+
+U glavnoj petlji program čita stanje svakog tastera i na osnovu toga mijenja tok izvršavanja. Brojanje radi tako što se stotinke povećavaju korak po korak — kad dođu do 100, sekunde se povećaju i stotinke se vrate na nulu. Isti princip vrijedi za sekunde i minute. Lap funkcija kopira trenutne vrijednosti u poseban set varijabli i prikazuje ih na ekranu dok mjerenje teče normalno.
+
+## Hardverske komponente
+
+- Mikrokontroler: PIC16F88
+- LCD ekran: 16x2, port B, 4-bitna komunikacija
+- Tasteri: digitalni tasteri na portu A
+
+## Screenshotovi
+
+### Globalne varijable u projektu
+
+![Globalne varijable](https://raw.githubusercontent.com/redzictarik/FlowCode--STOPERICA/main/preview.webp)
+
+Varijable korištene u projektu: stanja štoperice (start, stop, reset, loop) i mjerenje (minute, sekunde, stotinke). Svaka mjerna varijabla ima i duplikat (npr. minute1) za potrebe Lap funkcije.
+
+### Flowcode dijagram toka
+
+![Dijagram toka](https://raw.githubusercontent.com/redzictarik/FlowCode--STOPERICA/main/prva.webp)
+
+Grafički prikaz cijelog programa — od inicijalizacije do glavne petlje sa svim grananjima i ispisom na LCD.
+
+### Štoperica u toku mjerenja
+
+![Mjerenje u toku](https://raw.githubusercontent.com/redzictarik/FlowCode--STOPERICA/main/druga.webp)
+
+Screenshot simulacije dok štoperica radi. Na LCD-u se vidi izmjereno vrijeme, što potvrđuje da tajmer i ispis rade ispravno.
+
+### Početno stanje nakon reseta
+
+![Reset stanje](https://raw.githubusercontent.com/redzictarik/FlowCode--STOPERICA/main/treca.webp)
+
+Ekran prikazuje 00:00:00 — sve varijable su na nuli i sistem čeka na Start.
+
+### Lap funkcija — međuvremena
+
+![Lap vremena](https://raw.githubusercontent.com/redzictarik/FlowCode--STOPERICA/main/cetvrta.webp)
+
+Prikaz više uzastopnih međuvremena. Svako je zabilježeno dok je tajmer nastavio normalno raditi u pozadini.
 
 ## Tehnologije
 
 - Flowcode
-- PIC mikrokontroler
-- LCD displej 16x2
+- PIC16F88
 
 ## Autor
 
-Emin Tulumović, ETŠ Tuzla
+Emin Tunguzović, ETŠ Tuzla
